@@ -59,6 +59,10 @@ describe('composeIntent', () => {
     expect(url.searchParams.get('text')).toBe('こんにちは')
     expect(url.searchParams.get('in_reply_to')).toBe('20')
   })
+  it('前後の空行は送らない', () => {
+    const url = new URL(composeIntent({ text: '\n\nテスト\n' }).href)
+    expect(url.searchParams.get('text')).toBe('テスト')
+  })
   it('引用は url に載せる', () => {
     const url = new URL(composeIntent({ text: 'a', quoteUrl: 'https://x.com/jack/status/20' }).href)
     expect(url.searchParams.get('url')).toBe('https://x.com/jack/status/20')

@@ -448,7 +448,7 @@ function WritePage({
     const intent = intents[i]
     const hasNext = i < desk.parts.length - 1
     if (intent.tooLong) {
-      const copied = await copyText(desk.parts[i])
+      const copied = await copyText(desk.parts[i].trim())
       setNotice(
         copied
           ? '本文が長いので、コピーしました。開いた投稿窓に貼り付けてください。送信は X で行います。'

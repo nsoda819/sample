@@ -75,7 +75,8 @@ export function composeIntent(opts: {
     const q = params.toString()
     return q ? `${INTENT_BASE}/tweet?${q}` : `${INTENT_BASE}/tweet`
   }
-  const full = build(opts.text)
+  // 前後の空行や空白は送らない。
+  const full = build(opts.text.trim())
   if (full.length <= MAX_INTENT_URL_LENGTH) return { href: full, tooLong: false }
   return { href: build(''), tooLong: true }
 }
