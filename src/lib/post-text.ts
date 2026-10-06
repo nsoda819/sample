@@ -1,35 +1,20 @@
 // 文字数、投稿 URL の読み取り、X の intent URL。
 // このアプリは投稿しない。X 公式の投稿窓を開くところまで。
 
+import twitterText from 'twitter-text'
+
+// 上限は X の数えかた（重み付き）で。日本語・絵文字は 1 字を 2、英数字は 1、URL は一律 23。
 export const LIMIT_SHORT = 280
 export const LIMIT_LONG = 25000
-/** X は本文中の URL を一律 23 字として数える。 */
-export const URL_WEIGHT = 23
 /** intent の URL がこれを超えたら、本文はコピーして空の投稿窓に貼らせる。 */
 export const MAX_INTENT_URL_LENGTH = 1900
 
 const INTENT_BASE = 'https://x.com/intent'
-const URL_PATTERN = /https?:\/\/[^\s　]+/g
 
-let segmenter: Intl.Segmenter | undefined
-
-function graphemeCount(text: string): number {
-  if (!text) return 0
-  segmenter ??= new Intl.Segmenter('ja', { granularity: 'grapheme' })
-  let n = 0
-  for (const _ of segmenter.segment(text)) n++
-  return n
-}
-
-/** 書記素で数える。URL は 23 字。 */
+/** X と同じ数えかた。X 公式の twitter-text の weightedLength。 */
 export function countPostLength(text: string): number {
-  let total = 0
-  let last = 0
-  for (const match of text.matchAll(URL_PATTERN)) {
-    total += graphemeCount(text.slice(last, match.index)) + URL_WEIGHT
-    last = match.index + match[0].length
-  }
-  return total + graphemeCount(text.slice(last))
+  if (!text) return 0
+  return twitterText.parseTweet(text).weightedLength
 }
 
 export type PostRef = {

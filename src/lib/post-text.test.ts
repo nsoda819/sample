@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import {
+  LIMIT_SHORT,
   MAX_INTENT_URL_LENGTH,
   composeIntent,
   countPostLength,
@@ -8,15 +9,20 @@ import {
 } from './post-text'
 
 describe('countPostLength', () => {
-  it('書記素で数える', () => {
+  it('X の数えかた：日本語と絵文字は 2、英数字は 1', () => {
     expect(countPostLength('')).toBe(0)
-    expect(countPostLength('余白')).toBe(2)
-    expect(countPostLength('👨‍👩‍👧')).toBe(1)
-    expect(countPostLength('が')).toBe(1)
+    expect(countPostLength('余白')).toBe(4)
+    expect(countPostLength('abc')).toBe(3)
+    expect(countPostLength('👨‍👩‍👧')).toBe(2)
+    expect(countPostLength('が')).toBe(2)
   })
-  it('URL は 23 字', () => {
+  it('URL は 23', () => {
     expect(countPostLength('https://example.com/very/long/path?q=1')).toBe(23)
-    expect(countPostLength('見て https://x.com 。')).toBe(3 + 23 + 2)
+    expect(countPostLength('見て https://x.com 。')).toBe(4 + 1 + 23 + 1 + 2)
+  })
+  it('日本語は 140 字で 280', () => {
+    expect(countPostLength('あ'.repeat(140))).toBe(LIMIT_SHORT)
+    expect(countPostLength('あ'.repeat(141))).toBeGreaterThan(LIMIT_SHORT)
   })
 })
 

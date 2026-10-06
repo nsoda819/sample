@@ -10,6 +10,10 @@ npm run typecheck
 npm run build && npm start
 ```
 
+## 公開（携帯で触る）
+
+Netlify に置く。`netlify.toml` と `@netlify/vite-plugin-tanstack-start` で、`npm run build` がそのまま Netlify 向けの出力（`dist/client` と `.netlify/v1/functions`）になる。Netlify で GitHub の `nsoda819/sample` を取り込み、ブランチを選ぶだけ。`npm audit` の high はこのプラグインの開発用依存で、公開されるアプリには入らない。
+
 ## やってはいけないこと
 
 - X のパスワードログインや OAuth は入れない。X は他アプリに投稿させない。
@@ -37,8 +41,8 @@ npm run build && npm start
 
 `src/lib/post-text.ts`。
 
-- 文字数は書記素（`Intl.Segmenter`）。URL は 23 字。
-- 上限は 280 字と長文（25000）。書くページの「長文」で切り替え。
+- 文字数は X と同じ数えかた。X 公式の `twitter-text` の `weightedLength`。日本語・絵文字は 1 字 2、英数字は 1、URL（`example.com` のような scheme なしも）は 23。
+- 上限は 280（日本語だけなら 140 字）と長文（25000）。書くページの「長文」で切り替え。
 - スレッドは「続き」。一本ずつ投稿窓を開き、直前の投稿 URL を貼ると次は返信（`in_reply_to`）になる。
 - 引用は intent の `url` に投稿 URL を載せる。
 - intent の URL が 1900 字を超えたら、本文をコピーし、空の投稿窓を開いて貼らせる。

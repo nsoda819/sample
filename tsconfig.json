@@ -8,6 +8,7 @@
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "types": ["vite/client"],
     "strict": true,
+    "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "noEmit": true,
     "baseUrl": ".",
