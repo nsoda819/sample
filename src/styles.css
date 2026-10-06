@@ -1,0 +1,152 @@
+@import 'tailwindcss';
+
+/* デジタル庁デザインシステム v2 にそろえる。キーカラーは Cyan。 */
+
+:root {
+  --yh-bg: #f2f2f2;
+  --yh-surface: #ffffff;
+  --yh-surface-hover: #e6e6e6;
+  --yh-surface-active: #cccccc;
+  --yh-border: #949494;
+  --yh-text: #1a1a1a;
+  --yh-text-sub: #595959;
+  --yh-key: #006f83;
+  --yh-key-hover: #005a6a;
+  --yh-key-active: #004c59;
+  --yh-on-key: #ffffff;
+  --yh-key-text: #006f83;
+  --yh-error: #c61a1a;
+  --yh-focus: #ffd43d;
+  color-scheme: light;
+}
+
+[data-theme='night'] {
+  --yh-bg: #1a1a1a;
+  --yh-surface: #262626;
+  --yh-surface-hover: #333333;
+  --yh-surface-active: #4d4d4d;
+  --yh-border: #767676;
+  --yh-text: #f2f2f2;
+  --yh-text-sub: #b3b3b3;
+  --yh-key: #004c59;
+  --yh-key-hover: #005a6a;
+  --yh-key-active: #003c47;
+  --yh-on-key: #ffffff;
+  --yh-key-text: #6fcfdf;
+  --yh-error: #ff8c8c;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --font-sans: 'Noto Sans JP', system-ui, sans-serif;
+  --font-mono: 'Noto Sans Mono', ui-monospace, monospace;
+
+  --color-bg: var(--yh-bg);
+  --color-surface: var(--yh-surface);
+  --color-surface-hover: var(--yh-surface-hover);
+  --color-surface-active: var(--yh-surface-active);
+  --color-line: var(--yh-border);
+  --color-ink: var(--yh-text);
+  --color-ink-sub: var(--yh-text-sub);
+  --color-key: var(--yh-key);
+  --color-key-hover: var(--yh-key-hover);
+  --color-key-active: var(--yh-key-active);
+  --color-on-key: var(--yh-on-key);
+  --color-key-text: var(--yh-key-text);
+  --color-error: var(--yh-error);
+  --color-focus: var(--yh-focus);
+
+  --radius-card: 8px;
+}
+
+html {
+  background: var(--yh-bg);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--yh-bg);
+  color: var(--yh-text);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.75;
+  letter-spacing: 0.02em;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 太さは 400 と 700 だけ。 */
+b,
+strong,
+h1,
+h2,
+h3 {
+  font-weight: 700;
+}
+
+:focus-visible {
+  outline: 4px solid var(--yh-focus);
+  outline-offset: 2px;
+}
+
+/* 押せるもの。ホバーと押下で必ず色が変わる。 */
+.yh-press {
+  cursor: pointer;
+  background: var(--yh-surface);
+  color: var(--yh-text);
+  border: 1px solid var(--yh-border);
+  border-radius: 8px;
+  transition: background-color 80ms;
+  text-decoration: none;
+  touch-action: manipulation;
+}
+.yh-press:hover {
+  background: var(--yh-surface-hover);
+}
+.yh-press:active {
+  background: var(--yh-surface-active);
+}
+
+.yh-primary {
+  cursor: pointer;
+  background: var(--yh-key);
+  color: var(--yh-on-key);
+  border: 1px solid var(--yh-key);
+  border-radius: 8px;
+  font-weight: 700;
+  transition: background-color 80ms;
+  text-decoration: none;
+  touch-action: manipulation;
+}
+.yh-primary:hover {
+  background: var(--yh-key-hover);
+}
+.yh-primary:active {
+  background: var(--yh-key-active);
+}
+
+.yh-press[aria-disabled='true'],
+.yh-primary[aria-disabled='true'],
+.yh-press:disabled,
+.yh-primary:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.yh-field {
+  background: var(--yh-surface);
+  color: var(--yh-text);
+  border: 1px solid var(--yh-border);
+  border-radius: 8px;
+}
+.yh-field:hover {
+  border-color: var(--yh-text);
+}
+
+.yh-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
